@@ -1,0 +1,68 @@
+<h2>Add Rule</h2>
+<form id="addrule" tal:attributes="action here/absolute_url"
+        method="post" name="addRule">
+<input type="hidden" name="zenScreenName"
+tal:attributes="value here/absolute_url_path"/>
+<span id="errmsg" style="color:red;"></span>
+<table>
+
+<tr><td>
+        <span id="new_id_label" style="color:white;">Name: </span>
+</td><td>
+<input id="newId" name="id" style="width:120px">
+</td></tr>
+
+<tr><td><span id="rulekey" style="color:white;">Rule Key: </span></td><td>
+	<select class="tablevalues" name="ruleKey" style="width:120px;"
+			tal:define="allKeys python:here.getRuleTypes();">
+			<option tal:repeat="thisKey allKeys" tal:content="thisKey"/>
+	</select>
+</td></tr>
+
+<tr>
+    <td><span id="rulevalue" style="color:white;">Rule Value:  </span></td>
+    <td>
+        <input class="tablevalues" type="text"
+            size="10" name="ruleValue"
+            value='' style="width:120px"/>
+    </td>
+</tr>
+
+<tr><td><span id="ruleeventclass" style="color:white;">Rule EventClass: </span></td><td>
+	<select class="tablevalues" name="ruleEventClass:text" style="width:120px"
+			tal:define="allClasses here/getEventClassNames">
+			<option tal:repeat="thisClass allClasses" tal:content="thisClass"/>
+	</select>
+</td></tr>
+	
+
+<tr><td><span id="toremove" style="color:white;">Remove Unmatched: </span></td><td>
+		<select class="tablevalues" name="toRemove:boolean" style="width:120px;">
+			<option tal:repeat="r python:(True,False)" tal:content="r"
+	            	tal:attributes="value r; selected python:r==False"/>
+		</select>
+</td></tr>
+
+<tr><td><span id="enabled" style="color:white;">Enabled: </span></td><td>
+		<select class="tablevalues" name="enabled:boolean" style="width:120px;">
+			<option tal:repeat="r python:(True,False)" tal:content="r"
+	            	tal:attributes="value r; selected python:r==True"/>
+		</select>
+</td></tr>
+
+<div id="dialog_buttons">
+<input tal:attributes="id string:dialog_submit;
+        type string:submit;
+        value string:OK;
+        onclick string:return $$('dialog').submit_form_and_check(
+                                                '${here/absolute_url}')"
+                        name="addRule:method" />
+                        
+<input tal:attributes="id string:dialog_cancel;
+                        type string:button;
+                        value string:Cancel;
+                        onclick string:$$('dialog').hide()" />
+</div>
+</table>
+<br>
+</form>

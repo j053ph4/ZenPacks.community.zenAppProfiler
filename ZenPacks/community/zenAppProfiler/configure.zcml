@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+	<browser:defaultView
+		for="ZenPacks.community.zenAppProfiler.ProfileOrganizer.ProfileOrganizer"
+		name="viewProfileOrganizer"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileOrganizer.pt"
+		name="viewProfileOrganizer"
+		for="*"
+		permission="zenoss.View"
+		/>
+	
+	<browser:defaultView
+		for="ZenPacks.community.zenAppProfiler.ProfileRuleset.ProfileRuleset"
+		name="viewProfileRuleset"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileRuleset.pt"
+		name="viewProfileRuleset"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/editProfileRuleset.pt"
+		name="editProfileRuleset"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileRulesetEvents.pt"
+		name="viewProfileRulesetEvents"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:defaultView
+		for="ZenPacks.community.zenAppProfiler.ProfileRule.ProfileRule"
+		name="viewProfileRule"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/viewProfileRule.pt"
+		name="viewProfileRule"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/editProfileRule.pt"
+		name="editProfileRule"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_addRuleset.pt"
+		name="dialog_addRuleset"
+		for="*"
+		permission="zenoss.View"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_removeRuleset.pt"
+		name="dialog_removeRuleset"
+		for="*"
+		permission="zenoss.View"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_moveRuleset.pt"
+		name="dialog_moveRuleset"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_addRule.pt"
+		name="dialog_addRule"
+		for="*"
+		permission="zenoss.View"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_removeRule.pt"
+		name="dialog_removeRule"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_runMatches.pt"
+		name="dialog_runMatches"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_runAllMatches.pt"
+		name="dialog_runAllMatches"
+		for="*"
+		permission="zenoss.View"
+		/>
+
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_buildAlerts.pt"
+		name="dialog_buildAlerts"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_buildAllAlerts.pt"
+		name="dialog_buildAllAlerts"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_runRules.pt"
+		name="dialog_runRules"
+		for="*"
+		permission="zenoss.View"
+		/>
+		
+	<browser:page
+		template="skins/ZenPacks.community.zenAppProfiler/dialog_runAllRules.pt"
+		name="dialog_runAllRules"
+		for="*"
+		permission="zenoss.View"
+		/>
+
+    <configure zcml:condition="installed Products.Zuul">
+
+        <adapter factory=".info.ProfileRulesetInfo"
+                 for=".ProfileRuleset.ProfileRuleset"
+                 provides=".interfaces.ProfileRulesetInfo"
+                 />
+                 
+        <adapter factory=".info.ProfileRuleInfo"
+                 for=".ProfileRule.ProfileRule"
+                 provides=".interfaces.ProfileRuleInfo"
+                 />
+
+	</configure>
+	
+</configure>
