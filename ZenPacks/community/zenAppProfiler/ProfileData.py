@@ -35,14 +35,22 @@ class ProfileData(ZenPackable):
         results = []
         if devicelist != None:
             for device in devicelist:
-                results.append(self.dmd.Devices.findDeviceByIdOrIp(device.id))
+                try:
+                    results.append(self.dmd.Devices.findDeviceByIdOrIp(device.id))
+                except:
+                    pass
         return results
 
     def getDeviceNames(self,devices):
+        """ return list of device names
+        """
         results = []
         if devices != None:
             for device in devices:
-                results.append(device.id)
+                try:
+                    results.append(device.id)
+                except:
+                    pass
         return results
     
     def getAllComponentMetaTypes(self):
@@ -197,11 +205,14 @@ class ProfileData(ZenPackable):
         rule.rulePotentialMatches = []
         rule.ruleCurrentMatches = []
         for device in devices:
-            isMember = self.isPotentialOrCurrent(rule,device)
-            if isMember == True:
-                rule.ruleCurrentMatches.append(device)
-            else:
-                rule.rulePotentialMatches.append(device)
+            try:
+                isMember = self.isPotentialOrCurrent(rule,device)
+                if isMember == True:
+                    rule.ruleCurrentMatches.append(device)
+                else:
+                    rule.rulePotentialMatches.append(device)
+            except:
+                pass
                     
     def isPotentialOrCurrent(self,rule,device):
         """ return True if a device is a member of ruleset organizers

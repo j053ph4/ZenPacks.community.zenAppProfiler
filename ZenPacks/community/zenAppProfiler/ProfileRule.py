@@ -103,8 +103,7 @@ class ProfileRule(ZenModelRM, ZenPackable):
         else:
             self.rulePotentialMatches = []
             self.ruleCurrentMatches = [] 
-        #setmgr.evalRuleComponents(self)
-        
+    
     def setRuleComponents(self):
         """ collect components that match rule
         """
@@ -117,6 +116,4 @@ class ProfileRule(ZenModelRM, ZenPackable):
         """
         self.ruleGroups = self.ruleset.rulesetGroupOrganizers
         self.ruleSystems = self.ruleset.rulesetSystemOrganizers
-    
-
 

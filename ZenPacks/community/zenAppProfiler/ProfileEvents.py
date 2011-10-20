@@ -78,9 +78,14 @@ class ProfileEvents(ZenPackable):
                 groupSettings.manage_addActionRule(alertName)
             for alert in groupSettings.getActionRules():
                 if alert.id == alertName:
-                    alert.enabled = True
-                    alert.where = ruleset.rulesetAlertWhere
-                    alert.where += ' and ' + eventWhere
+                    if len(ruleset.rulesetUsers) > 0:
+                        alert.enabled = True
+                    else:
+                        alert.enabled = False
+                    alert.where = ''
+                    if len(ruleset.rulesetAlertWhere) > 0:
+                        alert.where += ruleset.rulesetAlertWhere + ' and '
+                    alert.where += eventWhere
                     alert.clearFormat = alert.clearFormat.replace('[zenoss]',ruleset.id)
                     alert.format = alert.format.replace('[zenoss]',ruleset.id)
             if alertName not in ruleset.rulesetAlerts:
@@ -104,12 +109,16 @@ class ProfileEvents(ZenPackable):
                 if rule.ruleKey != 'System' and rule.ruleKey != 'Group':
                     rulewhere = self.ruleWhere(rule)
                     ruleWheres.append(rulewhere)
-        ruleCondition = self.compoundWhere(ruleWheres,"or")
+        if ruleset.matchAll == True:
+            ruleCondition = self.compoundWhere(ruleWheres,"and")
+        else:
+            ruleCondition = self.compoundWhere(ruleWheres,"or")
         # join organizational and rule-based filters
         if len(orgWheres) > 0 :
-            condition += orgCondition
+            condition += '('+ orgCondition
             if len(ruleWheres) > 0:
                 condition += ' and ' + ruleCondition
+            condition += ')'
         else:
             if len(ruleWheres) > 0:
                 condition += ruleCondition

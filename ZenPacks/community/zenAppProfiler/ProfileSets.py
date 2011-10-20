@@ -66,12 +66,6 @@ class ProfileSets(ZenPackable):
         """ faster testing assuming that matches are already built
         """
         ruleMatches = []
-        
-#        if rule.ruleKey == 'Ruleset':
-#        /    ruleSet = self.dmd.Profiles.findRuleset(rule.ruleValue)
-#            ruleMatches += 
-#            return self.evalRuleset(ruleSet,easy=True)
-#        else:
         ruleMatches += rule.getRulePotentialMatches() 
         ruleMatches += rule.getRuleCurrentMatches()
         return set(ruleMatches)
@@ -89,10 +83,10 @@ class ProfileSets(ZenPackable):
         return ruleMatches
 
     def evalRuleComponents(self,rule,devices,getAll=True):
-        """ evaluate a rule, return set of matching devices
+        """ evaluate a rule, return set of matching components
         """
         components = []
-        if rule.ruleKey != 'System' and rule.ruleKey != 'Group' and rule.ruleKey != 'Ruleset':
+        if rule.ruleKey != 'System' and rule.ruleKey != 'Group' and rule.ruleKey != 'Ruleset' and rule.ruleKey != 'Location' and rule.ruleKey != 'Device':
             for device in devices:
                 components += self.data.evalRuleWithObjects(rule,device)
         if rule.ruleKey == 'Ruleset':
@@ -109,7 +103,7 @@ class ProfileSets(ZenPackable):
         print "components on ruleset",ruleset.id,"for",len(devices),"devices"
         components = []
         for rule in ruleset.rules():
-            if rule.ruleKey != 'System' and rule.ruleKey != 'Group':
+            if rule.ruleKey != 'System' and rule.ruleKey != 'Group' and rule.ruleKey != 'Location' and rule.ruleKey != 'Device':
                 comps = self.evalRuleComponents(rule,devices)
                 components += comps
         #print "found",len(components),"components"
@@ -119,9 +113,10 @@ class ProfileSets(ZenPackable):
         #print "components on ruleset",ruleset.id,"for",len(devices),"devices"
         componentsets = []
         for rule in ruleset.rules():
-            if rule.ruleKey != 'System' and rule.ruleKey != 'Group':
+            if rule.ruleKey != 'System' and rule.ruleKey != 'Group' and rule.ruleKey != 'Location' and rule.ruleKey != 'Device':
                 comps = self.evalRuleComponents(rule,devices,False)
-                componentsets.append(set(comps))
+                if len(comps) > 0:
+                    componentsets.append(set(comps))
         rulesetcomponents = self.evalSets(componentsets,ruleset.matchAll)
         #print "set of rs components",len(rulesetcomponents)
         if rulesetcomponents != None:

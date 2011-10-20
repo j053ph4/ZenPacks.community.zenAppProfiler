@@ -174,8 +174,15 @@ class ProfileOrganizer(Organizer, ZenPackable):
         ruleset.updateRulesetUserGroups()
         return ruleset
     
+    def runAllRulesetsOptimized(self):
+        """ routine to run all rulesets in an optimal way
+        """
+        # first get all rulesets and add a property stating whether each has been run yet
+        # loop through all rulesets
+        # if rs contains pointer to another, move it to end of the list and run the next
+        
+        
     def manage_runAllMatches(self, REQUEST=None):
-    #def manage_buildAllMatches(self, REQUEST=None):
         """ build alert definitions based on rules
         """
         self.runAllRuleMatches()
@@ -191,10 +198,12 @@ class ProfileOrganizer(Organizer, ZenPackable):
         data = ProfileData(self.dmd)
         rmvs = []
         adds = []
-        
+        print "building adds and removes sets"
         for ruleset in self.getAllRulesets():
+            print "ruleset",ruleset.id
             rmvs.append(set(ruleset.applyRules(True)))
             adds.append(set(ruleset.applyRules(False)))
+        print "rebuilding components for all rulesets"
         self.setRulesetComponents()
         from ProfileSets import ProfileSets
         setMgr = ProfileSets(self.dmd)
